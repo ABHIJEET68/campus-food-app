@@ -48,6 +48,15 @@
       <h2 class="text-3xl font-semibold mb-4">Peak Hour & Graph Analysis</h2>
       <canvas id="combinedGraph" class="w-full h-64"></canvas>
     </section>
+
+    <div class="section bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Update Peak Hours Data</h2>
+      <input type="password" id="adminPassword" placeholder="Enter Admin Password" class="w-full p-2 border border-gray-300 rounded mb-2">
+      <input type="text" id="peakHoursInput" placeholder="Enter peak hour values (comma-separated)" class="w-full p-2 border border-gray-300 rounded mb-2">
+      <button onclick="updatePeakHours()" class="bg-green-500 hover:bg-green-600 transition text-white font-semibold py-2 px-4 rounded">
+        Update Graph
+      </button>
+    </div>
   </main>
   
   <footer class="bg-gray-200 text-center p-4">
