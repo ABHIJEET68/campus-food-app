@@ -24,7 +24,7 @@
     <section class="bg-white p-6 rounded-lg shadow">
       <h2 class="text-2xl font-semibold mb-4">About Us</h2>
       <p class="text-gray-700 leading-relaxed">
-        The AISSMS COE CAFE is celebrated for its hot dosas and scrumptious sandwiches. Our prompt service and welcoming staff make it the perfect spot for busy students seeking a satisfying meal between classes. Drop in to relax, enjoy great food, and create memorable moments!
+        The AISSMS COE CAFE is renowned for its hot dosas and scrumptious sandwiches. Our fast service and friendly staff make it the ideal spot for busy students looking for a satisfying meal between classes. Stop by to relax, enjoy delicious food, and make lasting memories.
       </p>
     </section>
 
@@ -38,7 +38,7 @@
     </section>
 
     <section class="bg-white p-6 rounded-lg shadow">
-      <h2 class="text-2xl font-semibold mb-4">Feedback</h2>
+      <h2 class="text-2xl font-semibold mb-4">Comments</h2>
       <textarea id="feedbackBox" placeholder="Share your thoughts or suggestions..." class="w-full p-3 border border-gray-300 rounded mb-4" rows="4"></textarea>
       <button onclick="submitFeedback()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
         Submit
@@ -50,6 +50,15 @@
       <h2 class="text-2xl font-semibold mb-4">Peak Hours & Analysis</h2>
       <canvas id="peakChart" class="mb-6"></canvas>
     </section>
+    
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Update Peak Hours Data</h2>
+      <input type="password" id="adminPassword" placeholder="Enter Admin Password" class="w-full p-2 border border-gray-300 rounded mb-2">
+      <input type="text" id="peakHoursInput" placeholder="Enter peak hour values (comma-separated)" class="w-full p-2 border border-gray-300 rounded mb-2">
+      <button onclick="updatePeakHours()" class="bg-green-500 hover:bg-green-600 transition text-white font-semibold py-2 px-4 rounded">
+        Update Graph
+      </button>
+    </div>
   </main>
 
   <footer class="bg-gray-200 text-center p-4">
@@ -69,9 +78,9 @@
       }
     }
 
-    var hoursData = [5, 15, 30, 56, 50, 35, 20];
-    var context = document.getElementById("peakChart").getContext("2d");
-    new Chart(context, {
+    let hoursData = [5, 15, 30, 56, 50, 35, 20];
+    const ctx = document.getElementById("peakChart").getContext("2d");
+    let peakChart = new Chart(ctx, {
       type: "line",
       data: {
         labels: ["8 AM", "10 AM", "12 PM", "2 PM", "4 PM", "6 PM", "8 PM"],
@@ -91,6 +100,23 @@
         }
       }
     });
+
+    function updatePeakHours() {
+      const adminPass = document.getElementById("adminPassword").value;
+      const inputData = document.getElementById("peakHoursInput").value;
+      if (adminPass !== "admin123") {
+        alert("Incorrect admin password!");
+        return;
+      }
+      const newData = inputData.split(",").map(item => parseFloat(item.trim())).filter(item => !isNaN(item));
+      if(newData.length === 0) {
+        alert("Please enter valid numbers.");
+        return;
+      }
+      peakChart.data.datasets[0].data = newData;
+      peakChart.update();
+      alert("Peak hours data updated successfully!");
+    }
   </script>
 </body>
 </html>
