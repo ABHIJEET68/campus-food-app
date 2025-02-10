@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Admin Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --success: #22c55e;
+      --error: #ef4444;
+      --background: #f8fafc;
+      --text: #0f172a;
+      --card: #ffffff;
+    }
+    [data-theme="dark"] {
+      --background: #0f172a;
+      --text: #f8fafc;
+      --card: #1e293b;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+    .background {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899);
+      filter: blur(80px);
+      opacity: 0.1;
+      z-index: 0;
+    }
+    .login-container {
+      background: var(--card);
+      padding: 2.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      z-index: 1;
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .login-container.animated {
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    .header p {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+    .input-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      background: var(--card);
+      color: var(--text);
+      transition: border-color 0.3s ease;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+    .password-container {
+      position: relative;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #64748b;
+    }
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .forgot-password {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform 0.2s ease;
+    }
+    .login-btn:hover {
+      transform: translateY(-2px);
+    }
+    .login-btn.loading {
+      opacity: 0.8;
+      pointer-events: none;
+    }
+    .loader {
+      width: 20px;
+      height: 20px;
+      border: 3px solid #fff;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: var(--card);
+      padding: 0.75rem;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .social-login {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .social-icon:hover {
+      transform: translateY(-2px);
+    }
+    .error-message {
+      color: var(--error);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+    .error-message.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (max-width: 480px) {
+      .login-container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="login-container animated">
+    <div class="header">
+      <h1>Welcome Back 👋</h1>
+      <p>Secure access to your admin dashboard</p>
+    </div>
+    <div class="input-group">
+      <input type="text" id="username" placeholder="Enter username" autocomplete="username">
+    </div>
+    <div class="input-group">
+      <div class="password-container">
+        <input type="password" id="password" placeholder="Enter password" autocomplete="current-password">
+        <i class="toggle-password fas fa-eye-slash"></i>
+      </div>
+    </div>
+    <div class="options">
+      <label class="remember-me">
+        <input type="checkbox" id="remember">
+        Remember me
+      </label>
+      <a href="#" class="forgot-password">Forgot password?</a>
+    </div>
+    <button class="login-btn" id="loginButton">
+      <span>Sign In</span>
+    </button>
+    <div class="social-login">
+      <div class="social-icon">
+        <i class="fab fa-google"></i>
+      </div>
+      <div class="social-icon">
+        <i class="fab fa-microsoft"></i>
+      </div>
+      <div class="social-icon">
+        <i class="fab fa-apple"></i>
+      </div>
+    </div>
+    <div id="errorMessage" class="error-message"></div>
+  </div>
+  <div class="theme-toggle" id="themeSwitch">
+    <i class="fas fa-moon"></i>
+  </div>
+  <script>
+    const themeBtn = document.getElementById('themeSwitch');
+    const pageBody = document.body;
+    themeBtn.addEventListener('click', () => {
+      const currentTheme = pageBody.getAttribute('data-theme');
+      pageBody.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+      themeBtn.innerHTML = pageBody.getAttribute('data-theme') === 'dark'
+        ? '<i class="fas fa-sun"></i>'
+        : '<i class="fas fa-moon"></i>';
+    });
+
+    const passField = document.getElementById('password');
+    const passToggle = document.querySelector('.toggle-password');
+    passToggle.addEventListener('click', () => {
+      passField.type = passField.type === 'password' ? 'text' : 'password';
+      passToggle.classList.toggle('fa-eye-slash');
+      passToggle.classList.toggle('fa-eye');
+    });
+
+    const btnLogin = document.getElementById('loginButton');
+    const errorMsg = document.getElementById('errorMessage');
+    async function processLogin() {
+      const user = document.getElementById('username').value;
+      const pass = passField.value;
+      btnLogin.innerHTML = '<div class="loader"></div>';
+      btnLogin.classList.add('loading');
+      setTimeout(() => {
+        if (user === 'admin' && pass === 'password123') {
+          window.location.href = 'index-1.html';
+        } else {
+          errorMsg.textContent = 'Invalid credentials. Please try again.';
+          errorMsg.classList.add('visible');
+          btnLogin.innerHTML = '<span>Sign In</span>';
+          btnLogin.classList.remove('loading');
+          btnLogin.style.transform = 'translateX(10px)';
+          setTimeout(() => { btnLogin.style.transform = 'translateX(0)'; }, 100);
+        }
+      }, 1500);
+    }
+    btnLogin.addEventListener('click', processLogin);
+    document.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') processLogin();
+    });
+    passField.addEventListener('input', () => {
+      if (passField.value.length > 0) {
+        errorMsg.classList.remove('visible');
+      }
+    });
+  </script>
+</body>
+</html>

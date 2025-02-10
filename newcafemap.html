@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AISSMS College Canteens</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+      display: none;
+      border-radius: 12px;
+    }
+    .leaflet-popup-content button {
+      background-color: #2563eb;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .leaflet-popup-content button:hover {
+      background-color: #1e40af;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-indigo-200 min-h-screen flex flex-col items-center justify-center p-4">
+  <div class="w-full max-w-3xl bg-white p-8 rounded-lg shadow-lg text-center animate__animated animate__fadeInDown">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">AISSMS College Canteens</h1>
+    <p class="text-lg text-gray-600 mb-6">Choose a canteen to view details and insights.</p>
+    <button class="bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-2 px-4 rounded shadow" onclick="displayMap()">
+      View Map
+    </button>
+  </div>
+  <div id="map" class="mt-6 animate__animated animate__fadeIn"></div>
+  <script>
+    const canteens = [
+      { name: "AISSMS IOIT CAFE", lat: 18.5312, lng: 73.8672, page: "ioit-order.html" },
+      { name: "AISSMS COE CAFE", lat: 18.5310, lng: 73.8670, page: "coe-order.html" },
+      { name: "BUNKERS CAFE", lat: 18.5308, lng: 73.8671, page: "bunkers-order.html" }
+    ];
+    let leafletMap;
+    function displayMap() {
+      const mapElement = document.getElementById('map');
+      mapElement.style.display = 'block';
+      if (!leafletMap) {
+        const avgLat = canteens.reduce((sum, c) => sum + c.lat, 0) / canteens.length;
+        const avgLng = canteens.reduce((sum, c) => sum + c.lng, 0) / canteens.length;
+        leafletMap = L.map('map').setView([avgLat, avgLng], 17);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(leafletMap);
+        canteens.forEach(canteen => {
+          L.marker([canteen.lat, canteen.lng]).addTo(leafletMap)
+            .bindPopup(`
+              <div class="text-center">
+                <strong>${canteen.name}</strong><br>
+                <button onclick="redirect('${canteen.page}')">View Details</button>
+              </div>
+            `);
+        });
+      }
+    }
+    function redirect(page) {
+      window.location.href = page;
+    }
+  </script>
+</body>
+</html>

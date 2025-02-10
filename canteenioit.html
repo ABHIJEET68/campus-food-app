@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canteen Details</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <header class="bg-orange-600 text-white py-8 shadow">
+    <div class="container mx-auto text-center">
+      <h1 class="text-4xl font-bold">IOIT Canteen Details</h1>
+      <p class="mt-2 text-lg">Delivering Quality Food & Service for Over 60 Years</p>
+    </div>
+  </header>
+
+  <main class="container mx-auto p-6 space-y-8">
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">About Us</h2>
+      <p class="text-gray-700 leading-relaxed">
+        For more than 60 years, AISSMS IOIT Cafe has been delighting its patrons with exceptional cuisine. Our cafe is a favorite spot for both students and college staff, offering a comforting cup of hot tea and bun maska. Whether you're here to savor the food or enjoy the vibrant atmosphere, we provide a welcoming space complete with a work area and free WiFi.
+      </p>
+    </section>
+
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Opening Hours</h2>
+      <ul class="list-disc list-inside text-gray-700">
+        <li>Monday - Friday: 8 AM - 10 PM</li>
+        <li>Saturday: 9 AM - 10 PM</li>
+        <li>Sunday: Closed</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Comments</h2>
+      <textarea id="feedbackBox" placeholder="Share your thoughts or suggestions..." class="w-full p-3 border border-gray-300 rounded mb-4" rows="4"></textarea>
+      <button onclick="submitFeedback()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+        Submit
+      </button>
+      <ul id="feedbackList" class="mt-4 space-y-2"></ul>
+    </section>
+
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Peak Hour & Graph Analysis</h2>
+      <canvas id="combinedGraph" class="w-full h-64"></canvas>
+    </section>
+  </main>
+
+  <footer class="bg-gray-200 text-center p-4">
+    <p class="text-gray-700">&copy; 2025 IOIT Cafe. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function submitFeedback() {
+      const feedbackBox = document.getElementById("feedbackBox");
+      const feedbackList = document.getElementById("feedbackList");
+      if (feedbackBox.value.trim() !== "") {
+        const listItem = document.createElement("li");
+        listItem.textContent = feedbackBox.value;
+        listItem.className = "p-2 bg-gray-100 rounded";
+        feedbackList.appendChild(listItem);
+        feedbackBox.value = "";
+      }
+    }
+
+    const peakData = [5, 15, 30, 56, 50, 35, 20];
+    const graphCtx = document.getElementById("combinedGraph").getContext("2d");
+    new Chart(graphCtx, {
+      type: "line",
+      data: {
+        labels: ["8 AM", "10 AM", "12 PM", "2 PM", "4 PM", "6 PM", "8 PM"],
+        datasets: [{
+          label: "Peak Hours",
+          data: peakData,
+          borderColor: "brown",
+          backgroundColor: "rgba(165,42,42,0.2)",
+          fill: false,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+  </script>
+</body>
+</html>

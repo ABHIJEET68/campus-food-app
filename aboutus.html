@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-cover bg-center" style="background-image: url('aboutusback.jpg');">
+  <div class="bg-white bg-opacity-80 backdrop-blur-sm min-h-screen flex items-center justify-center">
+    <div class="container mx-auto p-8">
+      <div class="bg-white p-8 rounded-xl shadow-2xl animate__animated animate__fadeInUp">
+        <h1 class="text-5xl font-bold text-gray-800 mb-6">About Our Company</h1>
+        <p class="text-xl text-gray-700 mb-8">
+          We are committed to delivering outstanding services to our clients. Our goal is to create innovative solutions with a strong focus on quality.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="w-full h-64 overflow-hidden rounded-xl">
+            <img src="aboutus2.jpg" alt="Company Image 1" class="w-full h-full object-cover transform transition duration-300 hover:scale-105">
+          </div>
+          <div class="w-full h-64 overflow-hidden rounded-xl">
+            <img src="aboutus3.jpg" alt="Company Image 2" class="w-full h-full object-cover transform transition duration-300 hover:scale-105">
+          </div>
+          <div class="w-full h-64 overflow-hidden rounded-xl">
+            <img src="aboutus6.jpg" alt="Company Image 3" class="w-full h-full object-cover transform transition duration-300 hover:scale-105">
+          </div>
+        </div>
+        <button id="moreInfoToggle" class="text-lg text-blue-600 underline hover:text-blue-800 transition focus:outline-none mb-6">
+          Learn more about us
+        </button>
+        <div id="moreInfo" class="hidden text-lg text-gray-700 animate__animated animate__fadeIn">
+          <p class="mb-4">
+            Since our inception in 2010, we have grown into a leader in our industry, consistently pushing the boundaries of innovation and customer satisfaction.
+          </p>
+          <p>
+            Our journey is fueled by passion and a commitment to excellence. We take pride in empowering our team and serving our community with integrity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const moreInfoToggle = document.getElementById('moreInfoToggle');
+    const moreInfo = document.getElementById('moreInfo');
+    moreInfoToggle.addEventListener('click', function() {
+      moreInfo.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Feedback Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-light: #4a90e2;
+      --blue-bright: #007aff;
+      --green-btn: #28a745;
+      --bg-start: #fdfbfb;
+      --bg-end: #ebedee;
+      --card-bg: #ffffff;
+      --input-bg: #f9f9f9;
+      --font-color: #333;
+      --anim-duration: 0.3s;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      color: var(--font-color);
+    }
+    .form-container {
+      background: var(--card-bg);
+      padding: 50px 60px;
+      border-radius: 15px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      max-width: 800px;
+      width: 100%;
+      text-align: left;
+      animation: fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h2 {
+      font-size: 2.2rem;
+      color: var(--blue-light);
+      margin-bottom: 20px;
+      text-align: center;
+      border-bottom: 2px solid var(--blue-light);
+      padding-bottom: 10px;
+    }
+    p {
+      font-size: 1rem;
+      color: #666;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    label {
+      font-weight: 600;
+      margin-top: 20px;
+      display: block;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: var(--input-bg);
+      font-size: 1rem;
+      transition: border var(--anim-duration), box-shadow var(--anim-duration);
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--blue-light);
+      box-shadow: 0 0 8px rgba(74, 144, 226, 0.4);
+    }
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .radio-group label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      transition: background var(--anim-duration), border-color var(--anim-duration);
+    }
+    .radio-group input[type="radio"] {
+      accent-color: var(--blue-light);
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+    .radio-group label:hover {
+      background: #f0f8ff;
+      border-color: var(--blue-light);
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    @media (min-width: 480px) {
+      .input-group {
+        flex-direction: row;
+      }
+      .input-group input {
+        flex: 1;
+      }
+    }
+    button {
+      width: 100%;
+      padding: 16px;
+      background: var(--green-btn);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background var(--anim-duration), transform var(--anim-duration);
+      margin-top: 30px;
+    }
+    button:hover {
+      background: #218838;
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Feedback Form</h2>
+    <p>We'd love to hear your thoughts, suggestions, or concerns!</p>
+    <form id="feedbackForm">
+      <label>Feedback Type:</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="feedback" value="Bad" required> Bad
+        </label>
+        <label>
+          <input type="radio" name="feedback" value="Better"> Better
+        </label>
+        <label>
+          <input type="radio" name="feedback" value="Good"> Good
+        </label>
+        <label>
+          <input type="radio" name="feedback" value="Excellent"> Excellent
+        </label>
+      </div>
+      <label for="message">Describe Your Feedback: <span style="color: red;">*</span></label>
+      <textarea id="message" placeholder="Write your feedback..." required></textarea>
+      <label>Name <span style="color: red;">*</span></label>
+      <div class="input-group">
+        <input type="text" id="firstName" placeholder="First Name" required>
+        <input type="text" id="lastName" placeholder="Last Name">
+      </div>
+      <label for="email">E-mail <span style="color: red;">*</span></label>
+      <input type="email" id="email" placeholder="example@example.com" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const firstName = document.getElementById("firstName").value;
+      const email = document.getElementById("email").value;
+      const selectedOption = document.querySelector('input[name="feedback"]:checked');
+      const feedbackText = document.getElementById("message").value;
+      
+      if (!selectedOption) {
+        alert("Please choose a feedback option.");
+        return;
+      }
+      
+      alert("Thank you, " + firstName + "! Your feedback has been received.");
+      this.reset();
+    });
+  </script>
+</body>
+</html>

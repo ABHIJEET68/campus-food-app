@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support & Assistance - Crowd Monitoring</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --main-color: #007BFF;
+      --hover-color: #0056b3;
+      --light-bg: #f4f7f9;
+      --box-bg: #ffffff;
+      --highlight-bg: #eef;
+      --font-color: #333;
+      --anim-speed: 0.3s;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fdfbfb, #ebedee);
+      color: var(--font-color);
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .wrapper {
+      max-width: 900px;
+      width: 100%;
+      background: var(--box-bg);
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      padding: 40px;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      color: var(--font-color);
+    }
+    p {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .faq-section {
+      margin-top: 30px;
+    }
+    .faq-section h2 {
+      font-size: 1.5rem;
+      color: var(--main-color);
+      background: var(--highlight-bg);
+      padding: 15px 20px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background var(--anim-speed);
+    }
+    .faq-section h2:hover {
+      background: var(--hover-color);
+      color: #fff;
+    }
+    .faq-section h2 span {
+      transition: transform var(--anim-speed);
+    }
+    .faq-section h2.active span {
+      transform: rotate(180deg);
+    }
+    .faq-section p {
+      max-height: 0;
+      overflow: hidden;
+      background: var(--highlight-bg);
+      border-left: 5px solid var(--main-color);
+      padding: 0 20px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      transition: max-height var(--anim-speed) ease-in-out, padding var(--anim-speed) ease-in-out;
+    }
+    .faq-section p.active {
+      padding: 15px 20px;
+      max-height: 500px;
+    }
+    .contact-info {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .contact-info h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: var(--main-color);
+    }
+    .contact-info a {
+      display: inline-block;
+      margin: 0 10px;
+      padding: 12px 25px;
+      background: var(--main-color);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background var(--anim-speed);
+    }
+    .contact-info a:hover {
+      background: var(--hover-color);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Support & Assistance</h1>
+    <p>Get answers to frequently asked questions about our crowd monitoring service.</p>
+    
+    <div class="faq-section">
+      <h2 onclick="toggleFAQ('faq1', this)">How does your crowd monitoring system work? <span>&#9660;</span></h2>
+      <p id="faq1">We use real-time data from sensors and user inputs to estimate the number of people at each cafe.</p>
+
+      <h2 onclick="toggleFAQ('faq2', this)">How do I locate the least busy cafe? <span>&#9660;</span></h2>
+      <p id="faq2">Simply refer to our live dashboard which shows up-to-date footfall information.</p>
+
+      <h2 onclick="toggleFAQ('faq3', this)">Is the data refreshed in real-time? <span>&#9660;</span></h2>
+      <p id="faq3">Absolutely, our system updates every 5 minutes to ensure you have the latest info.</p>
+    </div>
+    
+    <div class="contact-info">
+      <h2>Need Additional Help?</h2>
+      <a href="mailto:support@cafetracker.com">Email Us</a>
+      <a href="#" onclick="alert('Live chat will be available soon!')">Start Live Chat</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleFAQ(faqId, headerElement) {
+      const faqContent = document.getElementById(faqId);
+      if (faqContent.classList.contains('active')) {
+        faqContent.classList.remove('active');
+        headerElement.classList.remove('active');
+      } else {
+        faqContent.classList.add('active');
+        headerElement.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cafe COE - Order</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="bg-gradient-to-r from-yellow-50 to-pink-50 min-h-screen flex flex-col">
+  <main class="max-w-6xl mx-auto px-4 py-10 flex-1">
+    <div class="text-center mb-10">
+      <h2 class="text-4xl font-semibold text-gray-800">Welcome to Cafe COE</h2>
+      <p class="mt-2 text-lg text-gray-600">Delicious South Indian Dishes & Refreshing Drinks</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <section>
+        <h3 class="text-2xl font-semibold mb-4">Menu</h3>
+        <div id="menu-items" class="space-y-4"></div>
+      </section>
+      <section class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Your Cart</h3>
+        <div id="cart-items" class="space-y-4"></div>
+        <div class="mt-6 flex justify-between items-center">
+          <span class="text-xl font-bold">Total: ₹<span id="total">0</span></span>
+          <button onclick="checkoutOrder()" class="bg-teal-500 hover:bg-teal-600 transition text-white font-semibold py-2 px-4 rounded shadow">
+            Proceed to Pay
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="bg-white py-6 shadow-inner">
+    <div class="max-w-6xl mx-auto text-center text-gray-600">
+      &copy; 2025 Cafe COE. All rights reserved.
+    </div>
+  </footer>
+  <script>
+    const menuItems = [
+      { 
+        name: "Masala Dosa", 
+        price: 80, 
+        description: "Crispy dosa filled with spicy potato masala." 
+      },
+      { 
+        name: "Idli Sambar", 
+        price: 60, 
+        description: "Soft idlis served with a tangy sambar." 
+      },
+      { 
+        name: "Medu Vada", 
+        price: 50, 
+        description: "Golden medu vadas accompanied by coconut chutney." 
+      },
+      { 
+        name: "Paneer Sandwich", 
+        price: 70, 
+        description: "Grilled sandwich with a savory paneer filling." 
+      },
+      { 
+        name: "Fresh Lime Juice", 
+        price: 40, 
+        description: "Refreshing lime juice with a hint of mint." 
+      }
+    ];
+    let cart = [];
+    
+    function renderMenu() {
+      const menuContainer = document.getElementById("menu-items");
+      menuContainer.innerHTML = "";
+      menuItems.forEach((item, idx) => {
+        menuContainer.innerHTML += `
+          <div class="menu-item flex items-center bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
+            <div class="flex-1">
+              <h4 class="text-xl font-semibold text-gray-800">${item.name}</h4>
+              <p class="text-gray-500 text-sm">${item.description}</p>
+              <p class="text-gray-700 mt-1 font-medium">₹${item.price}</p>
+            </div>
+            <button onclick="addToCart(${idx})" class="bg-orange-500 hover:bg-orange-600 transition text-white font-semibold py-2 px-4 rounded">
+              Add
+            </button>
+          </div>
+        `;
+      });
+    }
+    
+    function addToCart(index) {
+      cart.push(menuItems[index]);
+      updateCart();
+    }
+    
+    function updateCart() {
+      const cartContainer = document.getElementById("cart-items");
+      cartContainer.innerHTML = "";
+      let totalAmount = 0;
+      cart.forEach((item, i) => {
+        totalAmount += item.price;
+        cartContainer.innerHTML += `
+          <div class="cart-item flex items-center justify-between bg-gray-50 p-3 rounded-md shadow">
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800">${item.name}</h4>
+              <p class="text-gray-600 text-sm">₹${item.price}</p>
+            </div>
+            <button onclick="removeFromCart(${i})" class="bg-red-500 hover:bg-red-600 transition text-white font-semibold py-1 px-3 rounded">
+              Remove
+            </button>
+          </div>
+        `;
+      });
+      document.getElementById("total").innerText = totalAmount;
+    }
+    
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+    
+    function checkoutOrder() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      alert("Redirecting to payment...");
+    }
+    
+    window.onload = renderMenu;
+  </script>
+</body>
+</html>
